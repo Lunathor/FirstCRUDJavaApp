@@ -1,0 +1,174 @@
+:root {
+    /* Цвета */
+    --color-primary: #9C27B0;
+    --color-primary-hover: #7B1FA2;
+    --color-secondary: #2196F3;
+    --color-secondary-hover: #0b7dda;
+    --color-danger: #f44336;
+    --color-danger-hover: #da190b;
+    --color-gray: #757575;
+    --color-gray-hover: #616161;
+    --color-dark: #333;
+    --color-light: #f2f2f2;
+    --color-light-hover: #f3e5f5;
+    --color-border: #ddd;
+    --color-background: #f5f5f5;
+    --color-white: white;
+    
+    /* Отступы */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 12px;
+    
+    /* Размеры */
+    --font-size-base: 14px;
+    --border-radius: 4px;
+    --border-radius-lg: 5px;
+    --form-max-width: 500px;
+    
+    /* Тени */
+    --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: var(--spacing-lg);
+    background-color: var(--color-background);
+}
+
+h1 {
+    color: var(--color-dark);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+}
+
+th, td {
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+th {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-light);
+}
+
+tr:hover {
+    background-color: var(--color-light-hover);
+}
+
+.button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+}
+
+.button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.button-edit {
+    background-color: var(--color-secondary);
+}
+
+.button-edit:hover {
+    background-color: var(--color-secondary-hover);
+}
+
+.button-delete {
+    background-color: var(--color-danger);
+}
+
+.button-delete:hover {
+    background-color: var(--color-danger-hover);
+}
+
+.button-cancel {
+    background-color: var(--color-gray);
+}
+
+.button-cancel:hover {
+    background-color: var(--color-gray-hover);
+}
+
+form {
+    max-width: var(--form-max-width);
+    margin: var(--spacing-lg) auto;
+    background-color: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+}
+
+label {
+    display: block;
+    margin-top: var(--spacing-md);
+    font-weight: bold;
+    color: var(--color-dark);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.actions {
+    margin-top: var(--spacing-md);
+}
+
+.actions a {
+    margin-left: var(--spacing-sm);
+}
+
+/* Убираем отступы у форм внутри таблицы */
+td form {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    max-width: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Убираем отступы у кнопок внутри форм в таблице */
+td form .button {
+    margin: 0;
+    margin-left: var(--spacing-sm);
+}
+
+/* Убираем отступ у первой кнопки в ячейке таблицы */
+td > .button:first-child {
+    margin-left: 0;
+}
+
