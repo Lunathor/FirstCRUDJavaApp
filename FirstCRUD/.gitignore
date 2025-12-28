@@ -1,6 +1,8 @@
 # Compiled class files
 *.class
 
+.env
+
 # Log files
 *.log
 
@@ -81,3 +83,6 @@ logs/
 
 # Database configuration
 src/main/resources/db.properties
+
+# SmartTomcat plugin settings
+.smarttomcat/
