@@ -3,6 +3,8 @@
 
 # Log files
 *.log
+logs/
+*.log.*
 
 # BlueJ files
 *.ctxt
@@ -34,6 +36,12 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Gradle (на случай если будет использоваться)
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
 # IDE - IntelliJ IDEA
 .idea/
@@ -41,12 +49,17 @@ buildNumber.properties
 *.iml
 *.ipr
 out/
+.idea_modules/
 
 # IDE - Eclipse
 .classpath
 .project
 .settings/
 bin/
+.metadata
+.loadpath
+.recommenders
+.factorypath
 
 # IDE - NetBeans
 /nbproject/private/
@@ -57,6 +70,10 @@ bin/
 
 # IDE - VS Code
 .vscode/
+*.code-workspace
+
+# IDE - Spring Tool Suite
+.springBeans
 
 # OS files
 .DS_Store
@@ -67,6 +84,7 @@ bin/
 ehthumbs.db
 Thumbs.db
 *~
+Desktop.ini
 
 # Temporary files
 *.tmp
@@ -74,10 +92,53 @@ Thumbs.db
 *.swp
 *.swo
 *~
+*.bak
+*.cache
+
+# Spring Boot
+spring-boot-*.log
+application-*.properties
+!application.properties.example
+!application.yml.example
 
 # Application specific
 *.log
 logs/
+*.pid
+*.pid.lock
 
-# Database configuration
-src/main/resources/db.properties
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+
+# SmartTomcat (если используется)
+.smarttomcat/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Sensitive configuration (создайте application.properties.example для примера)
+# Если нужно исключить реальный файл с паролями, раскомментируйте:
+# src/main/resources/application.properties
+
+# H2 Database (если используется)
+*.mv.db
+*.trace.db
+
+# Test coverage
+.nyc_output/
+coverage/
+
+# Node modules (если используется frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package lock files (опционально, если используете npm/yarn)
+package-lock.json
+yarn.lock
