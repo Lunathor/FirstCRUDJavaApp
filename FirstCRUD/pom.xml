@@ -65,8 +65,8 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        
-        <!-- Dotenv для чтения .env файлов -->
+
+        <!-- Dotenv для поддержки переменных окружения из .env файла -->
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>

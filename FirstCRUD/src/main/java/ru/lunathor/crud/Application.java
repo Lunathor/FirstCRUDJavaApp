@@ -7,14 +7,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        // Загружаем переменные окружения из .env файла
+        // Загружаем переменные окружения из .env файла (если существует)
+        // Переменные из .env файла не перезаписывают существующие системные переменные окружения
         Dotenv dotenv = Dotenv.configure()
-                .ignoreIfMissing()
+                .ignoreIfMissing() // Игнорируем, если файл .env отсутствует
+                .ignoreIfMalformed() // Игнорируем невалидные строки
                 .load();
         
-        // Устанавливаем переменные окружения в систему
+        // Устанавливаем переменные из .env файла в системные свойства
+        // только если они еще не установлены (приоритет у системных переменных окружения)
         dotenv.entries().forEach(entry -> {
-            System.setProperty(entry.getKey(), entry.getValue());
+            String key = entry.getKey();
+            // Проверяем, не установлена ли уже переменная окружения или системное свойство
+            if (System.getenv(key) == null && System.getProperty(key) == null) {
+                System.setProperty(key, entry.getValue());
+            }
         });
         
         SpringApplication.run(Application.class, args);

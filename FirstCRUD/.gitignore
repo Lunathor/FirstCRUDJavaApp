@@ -1,29 +1,7 @@
-# Compiled class files
-*.class
-
-# Log files
-*.log
-logs/
-*.log.*
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# Virtual machine crash logs
-hs_err_pid*
-replay_pid*
+# .env файл с секретными данными
+.env
+# Но .env.example должен быть в репозитории
+!.env.example
 
 # Maven
 target/
@@ -36,109 +14,31 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
-.mvn/wrapper/maven-wrapper.properties
 
-# Gradle (на случай если будет использоваться)
-.gradle/
-build/
-!gradle/wrapper/gradle-wrapper.jar
-
-# IDE - IntelliJ IDEA
+# IDE
 .idea/
-*.iws
 *.iml
+*.iws
 *.ipr
-out/
-.idea_modules/
-
-# IDE - Eclipse
+.vscode/
 .classpath
 .project
 .settings/
-bin/
-.metadata
-.loadpath
-.recommenders
-.factorypath
 
-# IDE - NetBeans
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# Compiled class files
+*.class
 
-# IDE - VS Code
-.vscode/
-*.code-workspace
-
-# IDE - Spring Tool Suite
-.springBeans
-
-# OS files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-*~
-Desktop.ini
-
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-*.bak
-*.cache
-
-# Spring Boot
-spring-boot-*.log
-application-*.properties
-!application.properties.example
-!application.yml.example
-
-# Application specific
+# Log files
 *.log
-logs/
-*.pid
-*.pid.lock
 
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-*.h2.db
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
-# SmartTomcat (если используется)
-.smarttomcat/
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Sensitive configuration (создайте application.properties.example для примера)
-# Если нужно исключить реальный файл с паролями, раскомментируйте:
-# src/main/resources/application.properties
-
-# H2 Database (если используется)
-*.mv.db
-*.trace.db
-
-# Test coverage
-.nyc_output/
-coverage/
-
-# Node modules (если используется frontend)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Package lock files (опционально, если используете npm/yarn)
-package-lock.json
-yarn.lock
+# OS
+.DS_Store
+Thumbs.db
