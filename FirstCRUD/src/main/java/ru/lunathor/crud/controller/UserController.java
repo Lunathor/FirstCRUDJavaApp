@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.lunathor.crud.model.User;
 import ru.lunathor.crud.service.UserService;
 import java.util.List;
@@ -41,11 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@RequestParam("name") String name,
-                           @RequestParam("surname") String surname,
-                           @RequestParam("email") String email,
-                           @RequestParam("age") Integer age) {
-        User user = new User(age, email, surname, name);
+    public String saveUser(User user) {
         userService.saveUser(user);
         return "redirect:/users/list";
     }
@@ -59,16 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("id") Long id,
-                             @RequestParam("name") String name,
-                             @RequestParam("surname") String surname,
-                             @RequestParam("email") String email,
-                             @RequestParam("age") Integer age) {
-        User user = userService.getUserById(id);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setEmail(email);
-        user.setAge(age);
+    public String updateUser(User user) {
         userService.updateUser(user);
         return "redirect:/users/list";
     }
