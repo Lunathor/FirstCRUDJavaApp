@@ -1,3 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% response.sendRedirect("/users/list"); %>
+<% 
+    String contextPath = request.getContextPath();
+    response.sendRedirect(contextPath + "/users/list"); 
+%>
 
