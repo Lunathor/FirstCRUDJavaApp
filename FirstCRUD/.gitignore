@@ -25,6 +25,9 @@ buildNumber.properties
 .project
 .settings/
 
+# SmartTomcat plugin settings
+.smarttomcat/
+
 # Compiled class files
 *.class
 
