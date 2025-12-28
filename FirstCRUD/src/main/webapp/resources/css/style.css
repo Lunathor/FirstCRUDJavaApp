@@ -108,11 +108,22 @@ tr:hover {
     background-color: var(--color-gray-hover);
 }
 
+.button-logout {
+    background-color: var(--color-primary);
+    font-size: 13px;
+    margin: 0;
+    box-shadow: none;
+}
+
+.button-logout:hover {
+    background-color: var(--color-primary-hover);
+}
+
 form {
     max-width: var(--form-max-width);
     margin: var(--spacing-lg) auto;
     background-color: var(--color-white);
-    padding: var(--spacing-lg);
+    padding: 0;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--box-shadow);
 }
@@ -151,10 +162,11 @@ input[type="number"]:focus {
     margin-left: var(--spacing-sm);
 }
 
-/* Убираем отступы у форм внутри таблицы */
-td form {
-    margin: 0;
-    padding: 0;
+/* Убираем отступы у форм внутри таблицы и inline форм */
+td form,
+form[style*="display: inline"] {
+    margin: 0 !important;
+    padding: 0 !important;
     display: inline;
     max-width: none;
     background-color: transparent;

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя страница</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}">
+</head>
+<body>
+    <div style="margin-bottom: 20px;">
+        <span sec:authentication="name">Пользователь</span>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
+            <button type="submit" class="button button-logout">Выйти</button>
+        </form>
+    </div>
+    
+    <h1>Мои данные</h1>
+    
+    <div th:if="${user}">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td th:text="${user.id}"></td>
+            </tr>
+            <tr>
+                <th>Имя пользователя</th>
+                <td th:text="${user.username}"></td>
+            </tr>
+            <tr>
+                <th>Имя</th>
+                <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <th>Фамилия</th>
+                <td th:text="${user.surname}"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <th>Возраст</th>
+                <td th:text="${user.age}"></td>
+            </tr>
+            <tr>
+                <th>Роли</th>
+                <td>
+                    <span th:each="role, iterStat : ${user.roles}" 
+                          th:text="${role.name}">
+                        <span th:if="${!iterStat.last}">, </span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div sec:authorize="hasRole('ADMIN')" style="margin-top: 20px;">
+        <a th:href="@{/admin/}" class="button">Панель администратора</a>
+    </div>
+</body>
+</html>
+

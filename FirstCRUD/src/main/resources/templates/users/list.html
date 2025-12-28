@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}">
+</head>
+<body>
+    <div style="margin-bottom: 20px;">
+        <span sec:authentication="name">Пользователь</span>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
+            <button type="submit" class="button button-logout">Выйти</button>
+        </form>
+    </div>
+    
+    <h1>Список пользователей</h1>
+    <a th:href="@{/admin/new}" class="button">Добавить пользователя</a>
+    <br>
+    
+    <div th:if="${#lists.isEmpty(users)}">
+        <p>Список пользователей пуст.</p>
+    </div>
+    
+    <div th:unless="${#lists.isEmpty(users)}">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Имя пользователя</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Возраст</th>
+                <th>Действия</th>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.surname}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.age}"></td>
+                <td>
+                    <a th:href="@{/admin/edit(id=${user.id})}" class="button button-edit">Редактировать</a>
+                    <form th:action="@{/admin/delete}" method="post" style="display: inline;" 
+                          onsubmit="return confirm('Вы уверены, что хотите удалить этого пользователя?');">
+                        <input type="hidden" name="id" th:value="${user.id}" />
+                        <button type="submit" class="button button-delete">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
