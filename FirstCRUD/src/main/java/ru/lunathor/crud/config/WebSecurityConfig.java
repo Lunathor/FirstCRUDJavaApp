@@ -2,6 +2,7 @@ package ru.lunathor.crud.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +19,7 @@ public class WebSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final AuthenticationSuccessHandler loginSuccessHandler;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService,
+    public WebSecurityConfig(@Lazy UserDetailsService userDetailsService,
                             AuthenticationSuccessHandler loginSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.loginSuccessHandler = loginSuccessHandler;
@@ -32,24 +33,24 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-                .requestMatchers(new AntPathRequestMatcher("/user")).hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .successHandler(loginSuccessHandler)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-            )
-            .userDetailsService(userDetailsService);
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/user")).hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .successHandler(loginSuccessHandler)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
+                )
+                .userDetailsService(userDetailsService);
 
         return http.build();
     }

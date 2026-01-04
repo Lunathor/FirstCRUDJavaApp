@@ -3,53 +3,69 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список пользователей</title>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}">
 </head>
 <body>
-    <div style="margin-bottom: 20px;">
-        <span sec:authentication="name">Пользователь</span>
-        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
-            <button type="submit" class="button button-logout">Выйти</button>
-        </form>
+    <div class="header-bar">
+        <div class="user-info">
+            <span class="user-name" sec:authentication="name">Пользователь</span>
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <button type="submit" class="button button-logout">Выйти</button>
+            </form>
+        </div>
     </div>
     
-    <h1>Список пользователей</h1>
-    <a th:href="@{/admin/new}" class="button">Добавить пользователя</a>
-    <br>
-    
-    <div th:if="${#lists.isEmpty(users)}">
-        <p>Список пользователей пуст.</p>
-    </div>
-    
-    <div th:unless="${#lists.isEmpty(users)}">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Имя пользователя</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Email</th>
-                <th>Возраст</th>
-                <th>Действия</th>
-            </tr>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.surname}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.age}"></td>
-                <td>
-                    <a th:href="@{/admin/edit(id=${user.id})}" class="button button-edit">Редактировать</a>
-                    <form th:action="@{/admin/delete}" method="post" style="display: inline;" 
-                          onsubmit="return confirm('Вы уверены, что хотите удалить этого пользователя?');">
-                        <input type="hidden" name="id" th:value="${user.id}" />
-                        <button type="submit" class="button button-delete">Удалить</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Список пользователей</h1>
+            <a th:href="@{/admin/new}" class="button button-primary">
+                <span class="button-icon">+</span> Добавить пользователя
+            </a>
+        </div>
+        
+        <div class="content-card">
+            <div th:if="${#lists.isEmpty(users)}" class="empty-state">
+                <div class="empty-icon">📋</div>
+                <p class="empty-text">Список пользователей пуст</p>
+                <a th:href="@{/admin/new}" class="button button-primary">Добавить первого пользователя</a>
+            </div>
+            
+            <div th:unless="${#lists.isEmpty(users)}" class="table-container">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Имя пользователя</th>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Email</th>
+                            <th>Возраст</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.surname}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.age}"></td>
+                            <td class="actions-cell">
+                                <a th:href="@{/admin/edit(id=${user.id})}" class="button button-edit">Редактировать</a>
+                                <form th:action="@{/admin/delete}" method="post" class="delete-form"
+                                      onsubmit="return confirm('Вы уверены, что хотите удалить этого пользователя?');">
+                                    <input type="hidden" name="id" th:value="${user.id}" />
+                                    <button type="submit" class="button button-delete">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>

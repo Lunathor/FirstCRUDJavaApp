@@ -3,59 +3,141 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${user.id == null ? 'Добавить' : 'Редактировать'} + ' пользователя'">Форма пользователя</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${userForm.id == null ? 'Добавить' : 'Редактировать'} + ' пользователя'">Форма пользователя</title>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}">
 </head>
 <body>
-    <div style="margin-bottom: 20px;">
-        <span sec:authentication="name">Пользователь</span>
-        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
-            <button type="submit" class="button button-logout">Выйти</button>
-        </form>
+    <div class="header-bar">
+        <div class="user-info">
+            <span class="user-name" sec:authentication="name">Пользователь</span>
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <button type="submit" class="button button-logout">Выйти</button>
+            </form>
+        </div>
     </div>
     
-    <h1 th:text="${user.id == null ? 'Добавить' : 'Редактировать'} + ' пользователя'">Форма пользователя</h1>
-    
-    <form th:action="${user.id == null ? '/admin/save' : '/admin/update'}" method="post">
-        <input type="hidden" th:if="${user.id != null}" name="id" th:value="${user.id}"/>
+    <div class="container">
+        <h1 class="page-title" th:text="${userForm.id == null ? 'Добавить пользователя' : 'Редактировать пользователя'}">Форма пользователя</h1>
         
-        <label for="username">Имя пользователя:</label>
-        <input type="text" id="username" name="username" th:value="${user.username}" required/>
-        
-        <label for="password">Пароль<span th:if="${user.id == null}">*</span>:</label>
-        <input type="password" id="password" name="password" th:value="${user.password}" 
-               th:required="${user.id == null}" 
-               th:placeholder="${user.id != null ? 'Оставьте пустым, чтобы не менять пароль' : ''}"/>
-        
-        <label for="name">Имя:</label>
-        <input type="text" id="name" name="name" th:value="${user.name}" required/>
+        <div class="form-container">
+            <form class="user-form" th:if="${userForm.id == null}" th:action="@{/admin/save}" method="post" th:object="${userForm}">
+                <div class="form-group">
+                    <label for="username" class="form-label">Имя пользователя <span class="required">*</span></label>
+                    <input type="text" id="username" class="form-input" th:field="*{username}" placeholder="Введите имя пользователя" required/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Пароль <span class="required">*</span></label>
+                    <input type="password" id="password" class="form-input" th:field="*{password}" placeholder="Введите пароль" required/>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group form-group-half">
+                        <label for="name" class="form-label">Имя <span class="required">*</span></label>
+                        <input type="text" id="name" class="form-input" th:field="*{name}" placeholder="Введите имя" required/>
+                    </div>
+                    
+                    <div class="form-group form-group-half">
+                        <label for="surname" class="form-label">Фамилия <span class="required">*</span></label>
+                        <input type="text" id="surname" class="form-input" th:field="*{surname}" placeholder="Введите фамилию" required/>
+                    </div>
+                </div>
 
-        <label for="surname">Фамилия:</label>
-        <input type="text" id="surname" name="surname" th:value="${user.surname}" required/>
+                <div class="form-row">
+                    <div class="form-group form-group-half">
+                        <label for="email" class="form-label">Email <span class="required">*</span></label>
+                        <input type="email" id="email" class="form-input" th:field="*{email}" placeholder="example@mail.com" required/>
+                    </div>
+                    
+                    <div class="form-group form-group-half">
+                        <label for="age" class="form-label">Возраст <span class="required">*</span></label>
+                        <input type="number" id="age" class="form-input" th:field="*{age}" placeholder="18" min="1" max="120" required/>
+                    </div>
+                </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${user.email}" required/>
+                <div class="form-group">
+                    <label class="form-label">Роли</label>
+                    <div class="roles-container">
+                        <div class="role-item" th:each="role : ${allRoles}">
+                            <input type="checkbox" 
+                                   class="role-checkbox"
+                                   th:id="${'role_' + role.id}" 
+                                   name="roleIds" 
+                                   th:value="${role.id}"
+                                   th:checked="${userForm.roleIds != null && userForm.roleIds.contains(role.id)}"/>
+                            <label class="role-label" th:for="${'role_' + role.id}" th:text="${role.name}"></label>
+                        </div>
+                    </div>
+                </div>
 
-        <label for="age">Возраст:</label>
-        <input type="number" id="age" name="age" th:value="${user.age}" required/>
+                <div class="form-actions">
+                    <button type="submit" class="button button-primary">Сохранить</button>
+                    <a th:href="@{/admin/list}" class="button button-cancel">Отмена</a>
+                </div>
+            </form>
+            
+            <form class="user-form" th:if="${userForm.id != null}" th:action="@{/admin/update}" method="post" th:object="${userForm}">
+                <input type="hidden" th:field="*{id}"/>
+                
+                <div class="form-group">
+                    <label for="username" class="form-label">Имя пользователя <span class="required">*</span></label>
+                    <input type="text" id="username" class="form-input" th:field="*{username}" placeholder="Введите имя пользователя" required/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" id="password" class="form-input" th:field="*{password}" 
+                           placeholder="Оставьте пустым, чтобы не менять пароль"/>
+                    <small class="form-hint">Оставьте поле пустым, если не хотите менять пароль</small>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group form-group-half">
+                        <label for="name" class="form-label">Имя <span class="required">*</span></label>
+                        <input type="text" id="name" class="form-input" th:field="*{name}" placeholder="Введите имя" required/>
+                    </div>
+                    
+                    <div class="form-group form-group-half">
+                        <label for="surname" class="form-label">Фамилия <span class="required">*</span></label>
+                        <input type="text" id="surname" class="form-input" th:field="*{surname}" placeholder="Введите фамилию" required/>
+                    </div>
+                </div>
 
-        <label>Роли:</label>
-        <div style="margin-top: 5px;">
-            <div th:each="role : ${allRoles}" style="margin-bottom: 5px;">
-                <input type="checkbox" 
-                       th:id="${'role_' + role.id}" 
-                       name="roleIds" 
-                       th:value="${role.id}"
-                       th:checked="${user.roles != null && user.roles.contains(role)}"/>
-                <label th:for="${'role_' + role.id}" th:text="${role.name}" style="margin-left: 5px;"></label>
-            </div>
+                <div class="form-row">
+                    <div class="form-group form-group-half">
+                        <label for="email" class="form-label">Email <span class="required">*</span></label>
+                        <input type="email" id="email" class="form-input" th:field="*{email}" placeholder="example@mail.com" required/>
+                    </div>
+                    
+                    <div class="form-group form-group-half">
+                        <label for="age" class="form-label">Возраст <span class="required">*</span></label>
+                        <input type="number" id="age" class="form-input" th:field="*{age}" placeholder="18" min="1" max="120" required/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Роли</label>
+                    <div class="roles-container">
+                        <div class="role-item" th:each="role : ${allRoles}">
+                            <input type="checkbox" 
+                                   class="role-checkbox"
+                                   th:id="${'role_' + role.id}" 
+                                   name="roleIds" 
+                                   th:value="${role.id}"
+                                   th:checked="${userForm.roleIds != null && userForm.roleIds.contains(role.id)}"/>
+                            <label class="role-label" th:for="${'role_' + role.id}" th:text="${role.name}"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="button button-primary">Сохранить</button>
+                    <a th:href="@{/admin/list}" class="button button-cancel">Отмена</a>
+                </div>
+            </form>
         </div>
-
-        <div class="actions">
-            <button type="submit" class="button">Сохранить</button>
-            <a th:href="@{/admin/list}" class="button button-cancel">Отмена</a>
-        </div>
-    </form>
+    </div>
 </body>
 </html>
 

@@ -1,6 +1,7 @@
 package ru.lunathor.crud.config;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.lunathor.crud.model.Role;
@@ -19,7 +20,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public DataInitializer(RoleService roleService, UserService userService, PasswordEncoder passwordEncoder) {
+    public DataInitializer(RoleService roleService, @Lazy UserService userService, PasswordEncoder passwordEncoder) {
         this.roleService = roleService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -79,7 +80,7 @@ public class DataInitializer implements CommandLineRunner {
             }
             
             if (needsUpdate) {
-                userService.updateUser(user);
+                userService.updateUserDirect(user);
             }
         }
     }

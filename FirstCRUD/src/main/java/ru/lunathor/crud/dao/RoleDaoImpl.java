@@ -1,10 +1,12 @@
 package ru.lunathor.crud.dao;
 
-import ru.lunathor.crud.model.Role;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import ru.lunathor.crud.model.Role;
+
 import java.util.List;
 
 @Repository
@@ -31,7 +33,7 @@ public class RoleDaoImpl implements RoleDao {
         query.setParameter("name", name);
         try {
             return query.getSingleResult();
-        } catch (jakarta.persistence.NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }

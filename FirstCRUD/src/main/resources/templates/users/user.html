@@ -3,59 +3,63 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Моя страница</title>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}">
 </head>
 <body>
-    <div style="margin-bottom: 20px;">
-        <span sec:authentication="name">Пользователь</span>
-        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
-            <button type="submit" class="button button-logout">Выйти</button>
-        </form>
+    <div class="header-bar">
+        <div class="user-info">
+            <span class="user-name" sec:authentication="name">Пользователь</span>
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <button type="submit" class="button button-logout">Выйти</button>
+            </form>
+        </div>
     </div>
     
-    <h1>Мои данные</h1>
-    
-    <div th:if="${user}">
-        <table>
-            <tr>
-                <th>ID</th>
-                <td th:text="${user.id}"></td>
-            </tr>
-            <tr>
-                <th>Имя пользователя</th>
-                <td th:text="${user.username}"></td>
-            </tr>
-            <tr>
-                <th>Имя</th>
-                <td th:text="${user.name}"></td>
-            </tr>
-            <tr>
-                <th>Фамилия</th>
-                <td th:text="${user.surname}"></td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td th:text="${user.email}"></td>
-            </tr>
-            <tr>
-                <th>Возраст</th>
-                <td th:text="${user.age}"></td>
-            </tr>
-            <tr>
-                <th>Роли</th>
-                <td>
-                    <span th:each="role, iterStat : ${user.roles}" 
-                          th:text="${role.name}">
-                        <span th:if="${!iterStat.last}">, </span>
-                    </span>
-                </td>
-            </tr>
-        </table>
-    </div>
-    
-    <div sec:authorize="hasRole('ADMIN')" style="margin-top: 20px;">
-        <a th:href="@{/admin/}" class="button">Панель администратора</a>
+    <div class="container">
+        <h1 class="page-title">Мои данные</h1>
+        
+        <div class="content-card" th:if="${user}">
+            <div class="profile-info">
+                <div class="info-row">
+                    <div class="info-label">ID</div>
+                    <div class="info-value" th:text="${user.id}"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Имя пользователя</div>
+                    <div class="info-value" th:text="${user.username}"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Имя</div>
+                    <div class="info-value" th:text="${user.name}"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Фамилия</div>
+                    <div class="info-value" th:text="${user.surname}"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Email</div>
+                    <div class="info-value" th:text="${user.email}"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Возраст</div>
+                    <div class="info-value" th:text="${user.age}"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Роли</div>
+                    <div class="info-value">
+                        <span class="role-badge" th:each="role : ${user.roles}" th:text="${role.name}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-actions" sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin/}" class="button button-primary">
+                <span class="button-icon">⚙️</span> Панель администратора
+            </a>
+        </div>
     </div>
 </body>
 </html>
